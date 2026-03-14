@@ -6,15 +6,25 @@ public class PlayerCombat : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {   
-        Debug.Log("found " + collision.tag);
-        // Your Enemy Prefab MUST have the Tag "Enemy" assigned in the Inspector.
         if (collision.CompareTag("Enemy"))
         {
-            PoacherAI enemy = collision.GetComponent<PoacherAI>();
-            if (enemy != null){
-                
-                enemy.TakeDamage(attackDamage);
+            // 1. Check if it is a Poacher
+            PoacherAI poacher = collision.GetComponent<PoacherAI>();
+            if (poacher != null)
+            {
+                poacher.TakeDamage(attackDamage);
+                return; // Stop checking, we hit our target
             }
+            
+            // 2. Check if it is a Bandit
+            BanditAI bandit = collision.GetComponent<BanditAI>();
+            if (bandit != null)
+            {
+                bandit.TakeDamage(attackDamage);
+            }
+
+            // 3. When you add a Slime, you will have to come back and write this again.
+            // 4. When you add a Boss, you will have to write it again.
         }
     }
 }

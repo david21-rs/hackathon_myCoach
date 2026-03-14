@@ -88,7 +88,6 @@ public class PoacherAI : MonoBehaviour
 
     public void TakeDamage(float amount)
     {
-        Debug.Log("enemy taking damage: " + amount);
         currentHealth -= amount;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
         
@@ -102,7 +101,6 @@ public class PoacherAI : MonoBehaviour
 
     private void Die()
     {
-        Debug.Log("Enemy Killed");
-        gameObject.SetActive(false); // Temporary death
+        Destroy(gameObject);
     }
 }
