@@ -6,7 +6,6 @@ public class PlayerCombat : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {   
-        Debug.Log("found " + collision.tag);
         // Your Enemy Prefab MUST have the Tag "Enemy" assigned in the Inspector.
         if (collision.CompareTag("Enemy"))
         {
@@ -16,11 +15,11 @@ public class PlayerCombat : MonoBehaviour
                 enemy.TakeDamage(attackDamage);
                 return;
             }
-            enemy = collision.GetComponent<BanditAI>();
-            if (enemy != null){
+            // enemy = collision.GetComponent<BanditAI>();
+            // if (enemy != null){
                 
-                enemy.TakeDamage(attackDamage);
-            }
+            //     enemy.TakeDamage(attackDamage);
+            // }
         }
     }
 }
