@@ -218,6 +218,7 @@ public class HeroKnight : MonoBehaviour {
 
     public void TakeDamage(float damageAmount, Transform attacker)
     {
+        if(m_rolling) return;
         if (isBlocking && attacker != null)
         {
             float attackDirection = attacker.position.x - transform.position.x;

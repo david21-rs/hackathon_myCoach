@@ -101,6 +101,6 @@ public class PoacherAI : MonoBehaviour
 
     private void Die()
     {
-        gameObject.SetActive(false); // Temporary death
+        Destroy(gameObject);
     }
 }
