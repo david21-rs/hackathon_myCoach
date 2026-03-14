@@ -198,11 +198,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &421847574 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8271169805580409793, guid: 438b937c4b2af9a4b965aad197250e52, type: 3}
-  m_PrefabInstance: {fileID: 620652892}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &620652892
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1340,7 +1335,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: febb2a7ba8b99fb489d5de422cd0b717, type: 3}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 0.078803346, g: 0.4056604, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -1408,8 +1403,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ExitDoor
   nextSceneName: lvl3
-  enemies:
-  - {fileID: 421847574}
 --- !u!1 &1971493066
 GameObject:
   m_ObjectHideFlags: 0
