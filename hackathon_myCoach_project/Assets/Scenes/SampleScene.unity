@@ -291,7 +291,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoomManager
   combatRoomPrefabs:
-  - {fileID: 5812228449301950323, guid: 59bfda7ab04c7e5479798fa90c0380a5, type: 3}
+  - {fileID: 3347720320265223177, guid: 438b937c4b2af9a4b965aad197250e52, type: 3}
   animalRoomPrefabs: []
   treasureRoomPrefabs: []
   bossRoomPrefabs: []

@@ -62,10 +62,8 @@ public class PoacherAI : MonoBehaviour
         
         float direction = (currentTarget.position.x > transform.position.x) ? 1 : -1;
         actions.Move(direction * moveSpeed);
-        Debug.Log("moving: " + direction);
         if (Mathf.Abs(transform.position.x - currentTarget.position.x) < 0.5f) {
             currentTarget = (currentTarget == pointA) ? pointB : pointA;
-            Debug.Log("im in range! changing target to: " + currentTarget.GameObject().name);
         }
     }
 

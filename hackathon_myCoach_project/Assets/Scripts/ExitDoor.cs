@@ -1,63 +1,64 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using static Unity.Collections.AllocatorManager;
 
 public class ExitDoor : MonoBehaviour
 {
     [Header("Exact name of the next scene")]
     public string nextSceneName;
 
-    [Header("Enemies in this scene (drag them all in)")]
-    public GameObject[] enemies;
-
     private bool doorOpen = false;
+    private SpriteRenderer spriteRenderer;
+    private Collider2D doorCollider;
 
-    void Update()
+    void Start()
     {
-        // Check every frame if all enemies are dead
-        if (!doorOpen && AllEnemiesDead())
-            OpenDoor();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        doorCollider = GetComponent<Collider2D>();
+
+        // Hide the visual and disable the trigger so the player cannot interact early
+        if (spriteRenderer != null) spriteRenderer.enabled = false;
+        if (doorCollider != null) doorCollider.enabled = false;
+
+        // Check for enemies twice a second instead of every single frame
+        InvokeRepeating(nameof(CheckEnemies), 0.5f, 0.5f);
     }
 
-    private bool AllEnemiesDead()
+    private void CheckEnemies()
     {
-        if (enemies.Length == 0) return true;
+        if (doorOpen) return;
 
-        foreach (GameObject enemy in enemies)
+        // FindGameObjectsWithTag ONLY finds active objects in the hierarchy.
+        // If your enemies are Destroyed or SetActive(false) upon death, this array becomes empty.
+        GameObject[] activeEnemies = GameObject.FindGameObjectsWithTag("Enemy");
+
+        if (activeEnemies.Length == 0)
         {
-            // Enemy is dead if the object is inactive
-            if (enemy != null && enemy.activeInHierarchy)
-                return false;
+            OpenDoor();
         }
-        return true;
     }
 
     private void OpenDoor()
     {
         doorOpen = true;
-        Debug.Log("All enemies dead — door is open!");
+        CancelInvoke(nameof(CheckEnemies)); // Stop scanning the scene to save CPU
 
-        // Turn the door green so player knows to go here
-        SpriteRenderer sr = GetComponent<SpriteRenderer>();
-        if (sr != null) sr.color = Color.green;
+        // Reveal the door and allow collisions
+        if (spriteRenderer != null) spriteRenderer.enabled = true;
+        if (doorCollider != null) doorCollider.enabled = true;
+        
+        Debug.Log("All enemies dead â€” door revealed!");
     }
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (!other.CompareTag("Player")) return;
+        if (!doorOpen || !other.CompareTag("Player")) return;
 
-        if (doorOpen)
+        if (string.IsNullOrEmpty(nextSceneName))
         {
-            if (string.IsNullOrEmpty(nextSceneName))
-            {
-                Debug.LogError("No next scene name set on ExitDoor!");
-                return;
-            }
-            SceneManager.LoadScene(nextSceneName);
+            Debug.LogError("No next scene name set on ExitDoor!");
+            return;
         }
-        else
-        {
-            Debug.Log("Kill all enemies first!");
-        }
+        
+        SceneManager.LoadScene(nextSceneName);
     }
 }
