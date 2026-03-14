@@ -5,7 +5,6 @@ public class HeroKnight : MonoBehaviour {
 
     [SerializeField] float      m_speed = 4.0f;
     [SerializeField] float      m_jumpForce = 7.5f;
-    [SerializeField] bool       m_noBlood = false;
     [SerializeField] GameObject m_slideDust;
 
     [Header("Sensors (Assign in Inspector)")]
@@ -45,121 +44,117 @@ public class HeroKnight : MonoBehaviour {
         originalLayer = gameObject.layer;
     }
 
-    void Update ()
+    void Update()
+{
+    m_timeSinceAttack += Time.deltaTime;
+
+    // --- Grounded ---
+    bool newGrounded = IsGrounded();
+    if (newGrounded != m_grounded) Debug.Log($"[ANIM CHANGE] Grounded: {newGrounded}");
+    m_grounded = newGrounded;
+    m_animator.SetBool("Grounded", m_grounded);
+
+    if (m_grounded) coyoteTimeCounter = coyoteTime;
+    else coyoteTimeCounter -= Time.deltaTime;
+
+    // --- Input ---
+    float inputX = Input.GetAxis("Horizontal");
+    bool isMoving = Mathf.Abs(inputX) > 0.1f; // Fixed deadzone
+
+    if (inputX > 0) { GetComponent<SpriteRenderer>().flipX = false; m_facingDirection = 1; }
+    else if (inputX < 0) { GetComponent<SpriteRenderer>().flipX = true; m_facingDirection = -1; }
+
+    if (!m_rolling) m_body2d.linearVelocity = new Vector2(inputX * m_speed, m_body2d.linearVelocity.y);
+
+    // --- Wall Slide ---
+    bool newWallSlide = ((IsWallRight() && inputX > 0) || (IsWallLeft() && inputX < 0)) && !m_grounded;
+    if (newWallSlide != m_isWallSliding) Debug.Log($"[ANIM CHANGE] WallSlide: {newWallSlide}");
+    m_isWallSliding = newWallSlide;
+    m_animator.SetBool("WallSlide", m_isWallSliding);
+
+    // --- Speed & Moving ---
+    m_animator.SetFloat("speedY", m_body2d.linearVelocity.y); 
+
+    bool animIsMoving = isMoving && !m_isWallSliding;
+    if (m_animator.GetBool("isMoving") != animIsMoving) Debug.Log($"[ANIM CHANGE] isMoving: {animIsMoving}");
+    m_animator.SetBool("isMoving", animIsMoving);
+
+    // --- Triggers ---
+    if (Input.GetKeyDown("e") && !m_rolling) 
     {
-        Debug.Log("is_grounded:" + m_grounded + " wall_left:" + IsWallLeft()+ " wall_right:" + IsWallRight());
-        m_timeSinceAttack += Time.deltaTime;
+        Debug.Log("[ANIM TRIGGER] Death");
+        m_animator.SetTrigger("Death");
+    }
+    else if (Input.GetKeyDown("q") && !m_rolling) 
+    {
+        Debug.Log("[ANIM TRIGGER] Hurt");
+        m_animator.SetTrigger("Hurt");
+    }
+    else if (Input.GetMouseButtonDown(0) && m_timeSinceAttack > 0.25f && !m_rolling)
+    {
+        m_timeSinceAttack = 0.0f;
+        m_currentAttack++;
+        if (m_currentAttack > 3) m_currentAttack = 1;
 
-        bool touchingRight = IsWallRight();
-        bool touchingLeft = IsWallLeft();
-
-        bool wasGrounded = m_grounded;
-        m_grounded = IsGrounded();
-
-        if (!wasGrounded && m_grounded)
-            m_animator.SetBool("Grounded", true);
-        
-        if (wasGrounded && !m_grounded)
-            m_animator.SetBool("Grounded", false);
-
-        if (m_grounded)
-            coyoteTimeCounter = coyoteTime;
-        else
-            coyoteTimeCounter -= Time.deltaTime;
-
-        float inputX = Input.GetAxis("Horizontal");
-
-        if (inputX > 0)
-        {
-            GetComponent<SpriteRenderer>().flipX = false;
-            m_facingDirection = 1;
-        }
-        else if (inputX < 0)
-        {
-            GetComponent<SpriteRenderer>().flipX = true;
-            m_facingDirection = -1;
-        }
-
-        if (!m_rolling)
-            m_body2d.linearVelocity = new Vector2(inputX * m_speed, m_body2d.linearVelocity.y);
-
-        m_animator.SetFloat("AirSpeedY", m_body2d.linearVelocity.y);
-
-        m_isWallSliding = (touchingRight || touchingLeft) && !m_grounded;
-        m_animator.SetBool("WallSlide", m_isWallSliding);
-
-        // Instantly break the slide if pulling away
-        if (touchingRight && inputX < 0) m_isWallSliding = false;
-        if (touchingLeft && inputX > 0) m_isWallSliding = false;
-
-        if (Input.GetKeyDown("e") && !m_rolling)
-        {
-            m_animator.SetBool("noBlood", m_noBlood);
-            m_animator.SetTrigger("Death");
-        }
-        else if (Input.GetKeyDown("q") && !m_rolling)
-            m_animator.SetTrigger("Hurt");
-        else if(Input.GetMouseButtonDown(0) && m_timeSinceAttack > 0.25f && !m_rolling)
-        {
-            m_currentAttack++;
-            if (m_currentAttack > 3) m_currentAttack = 1;
-            if (m_timeSinceAttack > 1.0f) m_currentAttack = 1;
-
-            m_animator.SetTrigger("Attack" + m_currentAttack);
-            m_timeSinceAttack = 0.0f;
-        }
-        else if (Input.GetMouseButtonDown(1) && !m_rolling)
-        {
-            m_animator.SetTrigger("Block");
-            m_animator.SetBool("IdleBlock", true);
-        }
-        else if (Input.GetMouseButtonUp(1))
-            m_animator.SetBool("IdleBlock", false);
-
-        else if (Input.GetKeyDown(KeyCode.LeftShift) && canDash && !m_isWallSliding)
-        {
-            StartCoroutine(PerformDash());
-        }
-
-        else if (Input.GetKeyDown(KeyCode.Space) && coyoteTimeCounter > 0f && !m_rolling)
-        {
-            m_animator.SetTrigger("Jump");
-            m_grounded = false;
-            m_animator.SetBool("Grounded", false);
-            m_body2d.linearVelocity = new Vector2(m_body2d.linearVelocity.x, m_jumpForce);
-            coyoteTimeCounter = 0f;
-        }
-
-        else if (Mathf.Abs(inputX) > Mathf.Epsilon)
-        {
-            m_delayToIdle = 0.05f;
-            m_animator.SetInteger("AnimState", 1);
-        }
-        else
-        {
-            m_delayToIdle -= Time.deltaTime;
-            if(m_delayToIdle < 0)
-                m_animator.SetInteger("AnimState", 0);
-        }
+        Debug.Log($"[ANIM CHANGE] ComboStep: {m_currentAttack}");
+        m_animator.SetInteger("ComboStep", m_currentAttack);
+        Debug.Log("[ANIM TRIGGER] Attack");
+        m_animator.SetTrigger("Attack");
+    }
+    else if (Input.GetMouseButtonDown(1) && !m_rolling)
+    {
+        Debug.Log("[ANIM TRIGGER] Block");
+        m_animator.SetTrigger("Block");
+        Debug.Log("[ANIM CHANGE] IdleBlock: True");
+        m_animator.SetBool("IdleBlock", true);
+    }
+    else if (Input.GetMouseButtonUp(1))
+    {
+        Debug.Log("[ANIM CHANGE] IdleBlock: False");
+        m_animator.SetBool("IdleBlock", false);
+    }
+    else if (Input.GetKeyDown(KeyCode.LeftShift) && canDash && !m_isWallSliding)
+    {
+        StartCoroutine(PerformDash());
+    }
+    else if (Input.GetKeyDown(KeyCode.Space) && coyoteTimeCounter > 0f && !m_rolling)
+    {
+        Debug.Log("[ANIM TRIGGER] Jump");
+        m_animator.SetTrigger("Jump");
+        m_grounded = false;
+        Debug.Log("[ANIM CHANGE] Grounded: False");
+        m_animator.SetBool("Grounded", false);
+        m_body2d.linearVelocity = new Vector2(m_body2d.linearVelocity.x, m_jumpForce);
+        coyoteTimeCounter = 0f;
     }
 
-    private IEnumerator PerformDash()
+    // --- Combo Reset ---
+    if (m_timeSinceAttack > 1.0f && m_currentAttack != 0)
     {
-        canDash = false;
-        m_rolling = true; 
-        m_animator.SetTrigger("Roll");
-
-        gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
-        m_body2d.linearVelocity = new Vector2(m_facingDirection * dashForce, 0f);
-
-        yield return new WaitForSeconds(dashDuration);
-
-        gameObject.layer = originalLayer;
-        m_rolling = false;
-
-        yield return new WaitForSeconds(dashCooldown);
-        canDash = true;
+        m_currentAttack = 0;
+        Debug.Log("[ANIM CHANGE] ComboStep: 0");
+        m_animator.SetInteger("ComboStep", 0);
     }
+}
+
+private IEnumerator PerformDash()
+{
+    canDash = false;
+    m_rolling = true; 
+    Debug.Log("[ANIM TRIGGER] Roll");
+    m_animator.SetTrigger("Roll");
+
+    gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
+    m_body2d.linearVelocity = new Vector2(m_facingDirection * dashForce, 0f);
+
+    yield return new WaitForSeconds(dashDuration);
+
+    gameObject.layer = originalLayer;
+    m_rolling = false;
+
+    yield return new WaitForSeconds(dashCooldown);
+    canDash = true;
+}
 
     private bool IsGrounded() => Physics2D.OverlapCircle(groundSensor.position, sensorRadius, groundLayer);
     private bool IsWallRight() => Physics2D.OverlapCircle(wallSensorR1.position, sensorRadius, groundLayer) && Physics2D.OverlapCircle(wallSensorR2.position, sensorRadius, groundLayer);
