@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class HeroKnight : MonoBehaviour {
 
@@ -41,6 +42,40 @@ public class HeroKnight : MonoBehaviour {
     private bool                m_rolling = false;
     private int                 m_facingDirection = 1;
     private float               m_timeSinceAttack = 0.0f;
+    private static HeroKnight instance;
+
+    void Awake()
+    {
+        // If a HeroKnight already exists from a previous scene, destroy
+        // the duplicate that was placed in this scene and keep the original
+        if (instance != null && instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        instance = this;
+        DontDestroyOnLoad(gameObject);  // Survives scene loads
+
+        // Move to EntryPoint whenever a new scene loads
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    // Called automatically every time a new scene finishes loading
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        // Find the EntryPoint in the new scene and teleport there
+        GameObject entry = GameObject.Find("EntryPoint");
+        if (entry != null)
+            transform.position = entry.transform.position;
+        else
+            Debug.LogWarning("No EntryPoint found in scene: " + scene.name);
+    }
 
     void Start()
     {
