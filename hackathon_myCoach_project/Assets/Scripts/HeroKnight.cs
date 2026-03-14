@@ -18,20 +18,25 @@ public class HeroKnight : MonoBehaviour {
     private bool canDash = true;
     private int originalLayer;
 
+    [Header("Blocking")]
+    public bool isBlocking = false;
+    [SerializeField] private float blockDuration = 1.0f;
+    [SerializeField] private float blockCooldown = 2.0f;
+    private float blockTimer = 0f;
+    private float blockDurationTimer = 0f;
+
     [Header("Jump Tuning")]
     [SerializeField] private float coyoteTime = 0.15f;
 
     [Header("Health & UI")]
     [SerializeField] private float maxHealth = 100f;
     private float currentHealth;
-    [SerializeField] private HealthBar healthBar; // Drag the Canvas here in the Inspector
+    [SerializeField] private HealthBar healthBar;
 
     [Header("Combat Hitbox")]
-    [SerializeField] private GameObject attackHitbox; // Drag your AttackHitbox here
-
+    [SerializeField] private GameObject attackHitbox; 
 
     private float coyoteTimeCounter;
-
     private Transform groundSensor, wallSensorR1, wallSensorR2, wallSensorL1, wallSensorL2;
     private LayerMask groundLayer;
     
@@ -46,8 +51,6 @@ public class HeroKnight : MonoBehaviour {
 
     void Awake()
     {
-        // If a HeroKnight already exists from a previous scene, destroy
-        // the duplicate that was placed in this scene and keep the original
         if (instance != null && instance != this)
         {
             Destroy(gameObject);
@@ -55,9 +58,7 @@ public class HeroKnight : MonoBehaviour {
         }
 
         instance = this;
-        DontDestroyOnLoad(gameObject);  // Survives scene loads
-
-        // Move to EntryPoint whenever a new scene loads
+        DontDestroyOnLoad(gameObject);  
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
@@ -66,15 +67,10 @@ public class HeroKnight : MonoBehaviour {
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
-    // Called automatically every time a new scene finishes loading
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        // Find the EntryPoint in the new scene and teleport there
         GameObject entry = GameObject.Find("EntryPoint");
-        if (entry != null)
-            transform.position = entry.transform.position;
-        else
-            Debug.LogWarning("No EntryPoint found in scene: " + scene.name);
+        if (entry != null) transform.position = entry.transform.position;
     }
 
     void Start()
@@ -83,23 +79,29 @@ public class HeroKnight : MonoBehaviour {
         m_body2d = GetComponent<Rigidbody2D>();
         originalLayer = gameObject.layer;
 
-        // The strings inside Find() MUST match your child object names perfectly.
         groundSensor = transform.Find("GroundSensor");
         wallSensorR1 = transform.Find("WallSensor_R1");
         wallSensorR2 = transform.Find("WallSensor_R2");
         wallSensorL1 = transform.Find("WallSensor_L1");
         wallSensorL2 = transform.Find("WallSensor_L2");
 
-        // Assumes your actual physics layer is named exactly "Ground"
         groundLayer = LayerMask.GetMask("Ground");
 
         currentHealth = maxHealth;
         if (healthBar != null) healthBar.UpdateHealth(currentHealth, maxHealth);
     }
 
-        void Update()
+    void Update()
     {
         m_timeSinceAttack += Time.deltaTime;
+        
+        if (blockTimer > 0) blockTimer -= Time.deltaTime;
+        
+        if (isBlocking)
+        {
+            blockDurationTimer -= Time.deltaTime;
+            if (blockDurationTimer <= 0) EndBlock();
+        }
 
         UpdateGroundState();
 
@@ -107,27 +109,19 @@ public class HeroKnight : MonoBehaviour {
         HandleMovement(inputX);
         UpdateAnimator(inputX);
 
-        // --- Action State Machine (Priority Ordered) ---
-        if (Input.GetKeyDown("e") && !m_rolling) TriggerDeath();
-        else if (Input.GetKeyDown("q") && !m_rolling) TakeDamage(10);
-        else if (Input.GetMouseButtonDown(0) && m_timeSinceAttack > 0.25f && !m_rolling) PerformAttack();
-        else if (Input.GetMouseButtonDown(1) && !m_rolling) StartBlock();
-        else if (Input.GetMouseButtonUp(1)) EndBlock();
+        if (Input.GetMouseButtonDown(0) && m_timeSinceAttack > 0.25f && !m_rolling) 
+        {
+            if (isBlocking) EndBlock(); 
+            PerformAttack();
+        }
+        else if (Input.GetMouseButtonDown(1) && !m_rolling && blockTimer <= 0 && !isBlocking) StartBlock();
         else if (Input.GetKeyDown(KeyCode.LeftShift) && canDash && !m_isWallSliding) PerformRoll();
         else if (Input.GetKeyDown(KeyCode.Space) && coyoteTimeCounter > 0f && !m_rolling) PerformJump();
-
     }
-
-    // ==========================================
-    // HELPER FUNCTIONS
-    // ==========================================
 
     private void UpdateGroundState()
     {
-        bool newGrounded = IsGrounded();
-        //if (newGrounded != m_grounded) Debug.Log($"[ANIM CHANGE] Grounded: {newGrounded}");
-        
-        m_grounded = newGrounded;
+        m_grounded = IsGrounded();
         m_animator.SetBool("Grounded", m_grounded);
 
         if (m_grounded) coyoteTimeCounter = coyoteTime;
@@ -140,14 +134,12 @@ public class HeroKnight : MonoBehaviour {
         { 
             GetComponent<SpriteRenderer>().flipX = false; 
             m_facingDirection = 1; 
-            // Face Hitbox Right
             attackHitbox.transform.localRotation = Quaternion.Euler(0, 0, 0);
         }
         else if (inputX < 0) 
         { 
             GetComponent<SpriteRenderer>().flipX = true; 
             m_facingDirection = -1; 
-            // Face Hitbox Left
             attackHitbox.transform.localRotation = Quaternion.Euler(0, 180, 0);
         }
 
@@ -156,76 +148,60 @@ public class HeroKnight : MonoBehaviour {
 
     private void UpdateAnimator(float inputX)
     {
-        bool newWallSlide = ((IsWallRight() && inputX > 0) || (IsWallLeft() && inputX < 0)) && !m_grounded;
-        //if (newWallSlide != m_isWallSliding) Debug.Log($"[ANIM CHANGE] WallSlide: {newWallSlide}");
-        m_isWallSliding = newWallSlide;
+        m_isWallSliding = ((IsWallRight() && inputX > 0) || (IsWallLeft() && inputX < 0)) && !m_grounded;
         m_animator.SetBool("WallSlide", m_isWallSliding);
-
         m_animator.SetFloat("speedY", m_body2d.linearVelocity.y); 
 
         bool isMoving = Mathf.Abs(inputX) > 0.1f;
-        bool animIsMoving = isMoving && !m_isWallSliding;
-        //if (m_animator.GetBool("isMoving") != animIsMoving) Debug.Log($"[ANIM CHANGE] isMoving: {animIsMoving}");
-        m_animator.SetBool("isMoving", animIsMoving);
+        m_animator.SetBool("isMoving", isMoving && !m_isWallSliding);
     }
 
     private void PerformAttack()
     {
-        m_timeSinceAttack = 0.0f; // Minor debounce to prevent multi-frame firing
-        //Debug.Log("[ANIM TRIGGER] Attack");
+        m_timeSinceAttack = 0.0f; 
         m_animator.SetTrigger("Attack");
     }
 
     private void StartBlock()
     {
-        //Debug.Log("[ANIM TRIGGER] Block");
+        isBlocking = true;
+        blockDurationTimer = blockDuration;
         m_animator.SetTrigger("Block");
-        //Debug.Log("[ANIM CHANGE] IdleBlock: True");
         m_animator.SetBool("IdleBlock", true);
     }
 
     private void EndBlock()
     {
-        //Debug.Log("[ANIM CHANGE] IdleBlock: False");
-        m_animator.SetBool("IdleBlock", false);
+        if (isBlocking)
+        {
+            isBlocking = false;
+            m_animator.SetBool("IdleBlock", false);
+            blockTimer = blockCooldown;
+        }
     }
 
     private void PerformRoll()
     {
+        if (isBlocking) EndBlock();
         StartCoroutine(PerformDash());
     }
 
     private void PerformJump()
     {
-        //Debug.Log("[ANIM TRIGGER] Jump");
         m_animator.SetTrigger("Jump");
-        
         m_grounded = false;
-        //Debug.Log("[ANIM CHANGE] Grounded: False");
         m_animator.SetBool("Grounded", false);
-        
         m_body2d.linearVelocity = new Vector2(m_body2d.linearVelocity.x, m_jumpForce);
         coyoteTimeCounter = 0f;
     }
 
-    private void TriggerDeath()
-    {
-        //Debug.Log("[ANIM TRIGGER] Death");
-        m_animator.SetTrigger("Death");
-    }
-
-    private void TriggerHurt()
-    {
-        //Debug.Log("[ANIM TRIGGER] Hurt");
-        m_animator.SetTrigger("Hurt");
-    }
-
+    private void TriggerDeath() => m_animator.SetTrigger("Death");
+    private void TriggerHurt() => m_animator.SetTrigger("Hurt");
 
     private IEnumerator PerformDash()
     {
         canDash = false;
         m_rolling = true; 
-        //Debug.Log("[ANIM TRIGGER] Roll");
         m_animator.SetTrigger("Roll");
 
         gameObject.layer = LayerMask.NameToLayer("Invincible");
@@ -240,10 +216,21 @@ public class HeroKnight : MonoBehaviour {
         canDash = true;
     }
 
-    public void TakeDamage(float damageAmount)
+    public void TakeDamage(float damageAmount, Transform attacker)
     {
+        if (isBlocking && attacker != null)
+        {
+            float attackDirection = attacker.position.x - transform.position.x;
+            if ((attackDirection > 0 && m_facingDirection == 1) || 
+                (attackDirection < 0 && m_facingDirection == -1))
+            {
+                SuccessfulBlock();
+                return; 
+            }
+        }
+
         currentHealth -= damageAmount;
-        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth); // Prevents negative health
+        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth); 
 
         if (healthBar != null) healthBar.UpdateHealth(currentHealth, maxHealth);
 
@@ -251,16 +238,43 @@ public class HeroKnight : MonoBehaviour {
         else TriggerHurt();
     }
 
+    private void SuccessfulBlock()
+    {
+        m_animator.SetTrigger("Block");
+        StartCoroutine(BlockInvincibility());
+        EndBlock(); 
+    }
+
+    private IEnumerator BlockInvincibility()
+    {
+        gameObject.layer = LayerMask.NameToLayer("Invincible");
+        yield return new WaitForSeconds(0.5f);
+        if (!m_rolling) gameObject.layer = originalLayer;
+    }
+
     private bool IsGrounded() => Physics2D.OverlapCircle(groundSensor.position, sensorRadius, groundLayer);
     private bool IsWallRight() => Physics2D.OverlapCircle(wallSensorR1.position, sensorRadius, groundLayer) && Physics2D.OverlapCircle(wallSensorR2.position, sensorRadius, groundLayer);
     private bool IsWallLeft() => Physics2D.OverlapCircle(wallSensorL1.position, sensorRadius, groundLayer) && Physics2D.OverlapCircle(wallSensorL2.position, sensorRadius, groundLayer);
     public void EnableHitbox() => attackHitbox.SetActive(true);
     public void DisableHitbox() => attackHitbox.SetActive(false);
+        // Returns 0 when completely on cooldown, and 1 when fully ready
+    public float GetShieldFillAmount()
+    {
+        if (isBlocking)
+        {
+            // Depletes from 1 to 0 while the shield is actively raised
+            return blockDurationTimer / blockDuration; 
+        }
+        else
+        {
+            // Fills from 0 to 1 while on cooldown
+            return 1f - (blockTimer / blockCooldown);
+        }
+    }
 
     void AE_SlideDust()
     {
         Vector3 spawnPosition = m_facingDirection == 1 ? wallSensorR2.position : wallSensorL2.position;
-
         if (m_slideDust != null)
         {
             GameObject dust = Instantiate(m_slideDust, spawnPosition, gameObject.transform.localRotation) as GameObject;

@@ -15,7 +15,7 @@ public class Bullet : MonoBehaviour
             // 3. If the script exists, trigger the damage method
             if (playerScript != null)
             {
-                playerScript.TakeDamage(damage);
+                playerScript.TakeDamage(damage, this.transform);
             }
         }
 
