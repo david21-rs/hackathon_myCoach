@@ -14,6 +14,12 @@ public class PlayerCombat : MonoBehaviour
             if (enemy != null){
                 
                 enemy.TakeDamage(attackDamage);
+                return;
+            }
+            enemy = collision.GetComponent<BanditAI>();
+            if (enemy != null){
+                
+                enemy.TakeDamage(attackDamage);
             }
         }
     }
