@@ -10,42 +10,54 @@ public static class SaveSystem
     {
         string json = JsonUtility.ToJson(data, prettyPrint: true);
         File.WriteAllText(SavePath, json);
-        Debug.Log("Game saved to: " + SavePath);
     }
 
     public static SaveData Load()
     {
         if (!File.Exists(SavePath))
-        {
-            Debug.Log("No save found. Starting fresh.");
             return new SaveData();
-        }
-
         string json = File.ReadAllText(SavePath);
         return JsonUtility.FromJson<SaveData>(json);
     }
 
-    public static void UnlockAnimal(SaveData save, string animalID)
+    // ANIMALS
+    public static void UnlockAnimal(SaveData save, string id)
     {
-        if (!save.unlockedAnimalIDs.Contains(animalID))
+        if (!save.unlockedAnimalIDs.Contains(id))
         {
-            save.unlockedAnimalIDs.Add(animalID);
-            Save(save);
-            Debug.Log("Unlocked animal: " + animalID);
-        }
-    }
-
-    public static void CompleteQuest(SaveData save, string questID)
-    {
-        if (!save.completedQuestIDs.Contains(questID))
-        {
-            save.completedQuestIDs.Add(questID);
+            save.unlockedAnimalIDs.Add(id);
             Save(save);
         }
     }
 
-    public static bool IsAnimalUnlocked(SaveData save, string animalID)
+    public static bool IsAnimalUnlocked(SaveData save, string id) =>
+        save.unlockedAnimalIDs.Contains(id);
+
+    // ENEMIES
+    public static void RegisterEnemyKill(SaveData save, string id)
     {
-        return save.unlockedAnimalIDs.Contains(animalID);
+        // Add to journal if first time seeing this enemy type
+        if (!save.unlockedEnemyIDs.Contains(id))
+            save.unlockedEnemyIDs.Add(id);
+
+        // Increment kill count
+        save.AddKill(id);
+        Save(save);
     }
+
+    public static bool IsEnemyUnlocked(SaveData save, string id) =>
+        save.unlockedEnemyIDs.Contains(id);
+
+    // ITEMS
+    public static void UnlockItem(SaveData save, string id)
+    {
+        if (!save.unlockedItemIDs.Contains(id))
+        {
+            save.unlockedItemIDs.Add(id);
+            Save(save);
+        }
+    }
+
+    public static bool IsItemUnlocked(SaveData save, string id) =>
+        save.unlockedItemIDs.Contains(id);
 }
