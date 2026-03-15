@@ -12,6 +12,68 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf5142e3d00304443bc2d9e5770d15df, type: 3}
   m_Name: RainforestQuiz
   m_EditorClassIdentifier: Assembly-CSharp::QuizData
-  quizTitle: 
+  quizTitle: Zara's Quest
   passingScore: 3
-  questions: []
+  questions:
+  - questionText: 'Rainforests cover only 6% of Earth''s surface but
+
+      contain
+      what percentage of all plant and animal species?'
+    answers:
+    - Around 10%
+    - Around 25%
+    - Over 50%
+    - Around 5%
+    correctAnswerIndex: 2
+    wrongFeedback: Tropical rainforests contain over 50% of the world's plant and
+      animal species despite covering just 6% of the surface. A single hectare can
+      contain more tree species than all of Northern Europe combined. This density
+      of life is exactly why deforestation is so catastrophic, destroying a small
+      area wipes out enormous biodiversity irreversibly.
+    correctFeedback: Well done!
+  - questionText: What is the main reason companies clear rainforest in Southeast
+      Asia specifically?
+    answers:
+    - To build roads and cities
+    - To create palm oil plantations
+    - To mine for gold and copper
+    - To grow rice and wheat
+    correctAnswerIndex: 1
+    wrongFeedback: Palm oil is the leading driver of deforestation in Indonesia and
+      Malaysia, which together produce 85% of the world's supply. It is found in
+      roughly half of all supermarket products under hundreds of different ingredient
+      names. Forests are often cleared by burning, which releases massive stored
+      carbon directly into the atmosphere and destroys habitat that took thousands
+      of years to form.
+    correctFeedback: Well done!
+  - questionText: Zara loses her poison if she leaves the rainforest. What does this
+      tell us about ecosystems?
+    answers:
+    - Poison is a learned behaviour, not biological
+    - Frogs are not actually toxic, it is a myth
+    - 'Species are deeply dependent on specific   conditions and organisms within
+      their habitat '
+    - Toxicity increases outside of rainforests
+    correctAnswerIndex: 2
+    wrongFeedback: Poison dart frogs get their toxicity from eating specific rainforest
+      insects which themselves feed on specific plants. Remove any link in that chain
+      and the whole thing collapses. This is called trophic dependency and it applies
+      to almost every species on Earth. It is why habitat destruction is more dangerous
+      than it first appears, you are not just removing trees, you are dismantling
+      an entire interdependent system.
+    correctFeedback: Well done!
+  - questionText: When a rainforest is burned or cleared, it stops absorbing carbon
+      and starts releasing it. What is this called?
+    answers:
+    - Carbon flooding
+    - Atmospheric reversal
+    - Tipping point collapse
+    - Carbon source flip
+    correctAnswerIndex: 3
+    wrongFeedback: A forest that absorbs more carbon than it releases is called a
+      carbon sink. When it is destroyed it becomes a carbon source, releasing centuries
+      of stored carbon all at once. The Amazon is already beginning this flip in
+      its eastern regions due to drought and deforestation. Scientists call this
+      dieback. If it reaches a tipping point the process becomes self-sustaining
+      and irreversible, releasing an estimated 90 billion tons of carbon.
+    correctFeedback: Well done!
