@@ -16,7 +16,7 @@ MonoBehaviour:
   itemName: 'Reforestation Seed '
   icon: {fileID: 8887522133862586935, guid: f4115241b7ab31044a3b978d072f5de6, type: 3}
   fullArt: {fileID: 8887522133862586935, guid: f4115241b7ab31044a3b978d072f5de6, type: 3}
-  subtitle: 
+  subtitle: Ndugu's gift
   journalDescription: 'Journal Description
 
     A seed carried from the last clean
