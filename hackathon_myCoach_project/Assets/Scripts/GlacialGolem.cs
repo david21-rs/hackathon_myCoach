@@ -24,7 +24,9 @@ public class GlacialGolem : MonoBehaviour
     [SerializeField] private float slamRange = 3f;
     [SerializeField] private float slamDamage = 35f;
     [SerializeField] private float slamCooldown = 5f;
+    [SerializeField] private float slamWindupTime = 2f; // The 2-second telegraph
     [SerializeField] private GameObject slamVFXPrefab;
+    [SerializeField] private GameObject warningCirclePrefab; // Slot your new red circle here
     private float slamTimer = 0f;
 
     [Header("Ice Spear (Projectile)")]
@@ -40,6 +42,8 @@ public class GlacialGolem : MonoBehaviour
     [SerializeField] private float chargeDamage = 40f;
     [SerializeField] private float chargeRange = 7f;
     [SerializeField] private float chargeCooldown = 7f;
+
+
     private float chargeTimer = 0f;
 
     private Transform player;
@@ -86,7 +90,7 @@ public class GlacialGolem : MonoBehaviour
         float dist = Vector2.Distance(transform.position, player.position);
 
         animator.SetBool("isWalking", true);
-        spriteRenderer.flipX = player.position.x < transform.position.x;
+        spriteRenderer.flipX = player.position.x > transform.position.x;
         transform.position = Vector2.MoveTowards(
             transform.position,
             new Vector2(player.position.x, transform.position.y),
@@ -120,6 +124,7 @@ public class GlacialGolem : MonoBehaviour
         Vector3 lungePos = transform.position + (Vector3)(((Vector2)player.position - (Vector2)transform.position).normalized * 0.6f);
         yield return StartCoroutine(MoveToPosition(startPos, lungePos, 0.15f));
 
+        yield return new WaitForSeconds(0.4f);
         if (Vector2.Distance(transform.position, player.position) <= attackRange + 0.6f)
             player.GetComponent<HeroKnight>().TakeDamage(attackDamage, this.transform);
 
@@ -139,26 +144,61 @@ public class GlacialGolem : MonoBehaviour
         currentState = BossState.Attacking;
         slamTimer = 0f;
         animator.SetBool("isWalking", false);
-        Debug.Log("performing slam");
-        //animator.SetTrigger("attack"); // Reuse attack anim
+        Debug.Log("Slam windup started...");
 
-        // Wind-up: stretch tall
-        yield return StartCoroutine(ScaleTo(new Vector3(0.8f, 1.3f, 1f), 0.25f));
+        // 1. Spawn the warning circle at the boss's feet
+        GameObject warning = null;
+        if (warningCirclePrefab != null)
+        {
+            warning = Instantiate(warningCirclePrefab, projectileSpawnPoint.position, Quaternion.identity);
+            warning.transform.localScale = Vector3.zero; // Start at size 0
+        }
 
-        // Slam: squash wide and flat
-        yield return StartCoroutine(ScaleTo(new Vector3(1.5f, 0.6f, 1f), 0.1f));
+        // 2. The 2-Second Windup (Expand Circle & Flicker Boss)
+        float elapsed = 0f;
+        while (elapsed < slamWindupTime)
+        {
+            elapsed += Time.deltaTime;
 
-        // Damage + VFX at squash peak
+            // Smoothly grow the circle to match the exact damage radius
+            // (Multiplying by 2 because a default circle has a radius of 0.5)
+            if (warning != null)
+            {
+                float currentScale = Mathf.Lerp(0f, slamRange * 2f, elapsed / slamWindupTime);
+                warning.transform.localScale = new Vector3(currentScale, currentScale, 1f);
+            }
+
+            // Flicker the boss red and white rapidly
+            if (Mathf.FloorToInt(elapsed * 15f) % 2 == 0)
+                spriteRenderer.color = Color.red;
+            else
+                spriteRenderer.color = Color.white;
+
+            yield return null; // Wait for next frame
+        }
+
+        // 3. Clean up windup visuals
+        spriteRenderer.color = Color.white;
+        if (warning != null) Destroy(warning);
+
+        // 4. Play the explosion animation and VFX
+        animator.SetTrigger("slam");
+        
         if (slamVFXPrefab != null)
-            Instantiate(slamVFXPrefab, transform.position, Quaternion.identity);
+        {
+            GameObject vfx = Instantiate(slamVFXPrefab, projectileSpawnPoint.position, Quaternion.identity);
+            // Scales the explosion to exactly match your damage radius
+            vfx.transform.localScale = new Vector3(slamRange, slamRange, 1f); 
+        }
 
-        if (Vector2.Distance(transform.position, player.position) <= slamRange)
+        // 5. Apply Damage (Only if player is still inside the slamRange)
+        if (Vector2.Distance(projectileSpawnPoint.position, player.position) <= slamRange)
+        {
             player.GetComponent<HeroKnight>().TakeDamage(slamDamage, this.transform);
+        }
 
-        // Spring back to normal
-        yield return StartCoroutine(ScaleTo(originalScale, 0.2f));
-
-        yield return new WaitForSeconds(0.5f);
+        // 6. Recovery phase before returning to chase
+        yield return new WaitForSeconds(1f);
         if (currentState != BossState.Dead) currentState = BossState.Chasing;
     }
 
@@ -186,7 +226,7 @@ public class GlacialGolem : MonoBehaviour
             GameObject spear = Instantiate(iceSpearPrefab, projectileSpawnPoint.position, Quaternion.identity);
 
             float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-            spear.transform.rotation = Quaternion.Euler(0f, 0f, angle);
+            spear.transform.rotation = Quaternion.Euler(0f, 0f, angle - 90f); // or + 90f depending on your sprite
 
             Rigidbody2D rb = spear.GetComponent<Rigidbody2D>();
             if (rb != null) rb.linearVelocity = dir * projectileSpeed;

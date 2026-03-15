@@ -5,32 +5,29 @@ public class IceSpear : MonoBehaviour
 {
     public float damage = 24f;
     [SerializeField] private float lifetime = 4f;
-    [SerializeField] private GameObject hitVFXPrefab; // Optional impact particle
 
     void Start()
     {
         Destroy(gameObject, lifetime);
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    void OnTriggerEnter2D(Collider2D hitInfo)
     {
-        if (other.CompareTag("Player"))
+        // 1. Did we hit the player?
+        if (hitInfo.CompareTag("Player"))
         {
-            other.GetComponent<HeroKnight>()?.TakeDamage(damage, this.transform);
-            SpawnHitVFX();
-            Destroy(gameObject);
+            // 2. Look for your specific player script
+            HeroKnight playerScript = hitInfo.GetComponent<HeroKnight>();
+            
+            // 3. If the script exists, trigger the damage method
+            if (playerScript != null)
+            {
+                playerScript.TakeDamage(damage, this.transform);
+            }
         }
-        else if (!other.CompareTag("Enemy") && !other.isTrigger)
-        {
-            // Hits walls or ground
-            SpawnHitVFX();
-            Destroy(gameObject);
-        }
+
+        // 4. Destroy the bullet no matter what it hits
+        Destroy(gameObject);
     }
 
-    private void SpawnHitVFX()
-    {
-        if (hitVFXPrefab != null)
-            Instantiate(hitVFXPrefab, transform.position, Quaternion.identity);
-    }
 }

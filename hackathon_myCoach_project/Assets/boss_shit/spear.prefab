@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: -4129424931978725817}
   - component: {fileID: 8031217238069621370}
   - component: {fileID: -2665989779151828320}
+  - component: {fileID: -8215108928313839511}
   m_Layer: 0
   m_Name: spear
   m_TagString: Untagged
@@ -101,14 +102,14 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1833482148672649448}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDamping: 0
   m_AngularDamping: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -157,3 +158,18 @@ CapsuleCollider2D:
   m_Offset: {x: 0.0023892007, y: 0.0023892294}
   m_Size: {x: 0.14639698, y: 0.3788054}
   m_Direction: 0
+--- !u!114 &-8215108928313839511
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1833482148672649448}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1779ff380d4347546ba29c34f7ceca9d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::IceSpear
+  damage: 24
+  lifetime: 4
+  hitVFXPrefab: {fileID: 0}
