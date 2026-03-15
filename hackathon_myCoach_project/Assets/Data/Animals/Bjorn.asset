@@ -12,20 +12,65 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a68b4a894e666d446baa798775f9591b, type: 3}
   m_Name: Bjorn
   m_EditorClassIdentifier: Assembly-CSharp::AnimalData
-  animalID: 
-  animalName: 
-  species: 
-  scientificName: 
+  animalID: Bjron
+  animalName: Bjron
+  species: Polar Bear
+  scientificName: Ursus Maritimus
   status: 0
-  biome: 0
+  biome: 3
   portrait: {fileID: 0}
   journalArt: {fileID: 0}
-  introDialogue: 
-  questDialogue: 
-  completionDialogue: 
-  journalEntry: 
-  conservationFact: 
-  doofNote: 
+  introDialogue: 'You are not afraid of me... interesting. Most of your kind would
+    start running or gunning at the sight of me. You are different... interesting.
+    There are people blocking the path to my hunting ground.
+
+    They have drills.
+    Equipment. Guns.
+
+
+    I have not eaten in eleven days.
+
+
+    I am not asking
+    for help. I am simply telling you
+
+    what is ahead. If you are going that way
+    anyway.
+
+'
+  questDialogue: 'The drilling crew. Three of them.
+
+    That path is the only way
+    to the seal colony. You are not afraid... interesting.
+
+
+    I will wait here.'
+  completionDialogue: 'When I was three my mother showed me ice that
+
+    stretched
+    past the horizon. By the time I was five
+
+    it was gone every summer.
+
+
+    We
+    adapt. That is what we do.
+
+
+    But you cannot swim forever.'
+  journalEntry: "Polar Bear | Ursus maritimus\r\nStatus: Vulnerable \u2014 26,000
+    remain in the wild\r\n\r\nPolar bears depend entirely on sea ice to hunt seals.
+    As Arctic ice retreats earlier each spring and forms later each autumn, bears
+    are forced to fast for longer and longer periods.\r\n\r\nArctic sea ice has declined
+    13% per decade since 1979. By 2100 it could disappear entirely in summer.\r\n\r\nPolar
+    bears are also poisoned by industrial chemicals like PCBs which accumulate in
+    their fatty tissue and damage their immune and reproductive systems.\r\n\r\nWhat
+    you can do: Support Polar Bears International at polarbearsinternational.org\r\n"
+  conservationFact: 'Polar bear fur is actually transparent, not white. It scatters
+    light the same way snow does. '
+  doofNote: 'I once tried making the Arctic colder with a Cryo-Inator. It worked
+    locally for about 45 minutes. Climate is complicated. The real solution is emissions
+    reduction, not Inatoring.  Fun fact: Bjorn means bear in Norse.'
   questType: 0
   linkedQuiz: {fileID: 0}
-  rewardItemID: 
+  rewardItemID: WindmillBoots

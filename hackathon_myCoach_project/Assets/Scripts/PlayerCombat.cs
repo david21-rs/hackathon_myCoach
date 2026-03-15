@@ -21,6 +21,14 @@ public class PlayerCombat : MonoBehaviour
             if (bandit != null)
             {
                 bandit.TakeDamage(attackDamage);
+                return;
+            }
+
+            GlacialGolem golem = collision.GetComponent<GlacialGolem>();
+            if (golem != null)
+            {
+                golem.TakeDamage(attackDamage);
+                return;
             }
 
             // 3. When you add a Slime, you will have to come back and write this again.
