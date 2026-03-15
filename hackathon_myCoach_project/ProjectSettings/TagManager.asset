@@ -39,11 +39,17 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: BagroundBIG
+    uniqueID: 2248654805
+    locked: 0
   - name: Backgroud
     uniqueID: 2227653975
     locked: 0
   - name: BK2
     uniqueID: 3901566363
+    locked: 0
+  - name: Bk3
+    uniqueID: 4292343175
     locked: 0
   - name: Default
     uniqueID: 0
