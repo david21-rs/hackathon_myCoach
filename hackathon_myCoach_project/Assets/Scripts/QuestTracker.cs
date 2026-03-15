@@ -28,6 +28,7 @@ public class QuestTracker : MonoBehaviour
     // Call this when a poacher dies
     public void ReportKill(string animalID)
     {
+        Debug.Log("kill reported for: " + animalID);
         if (!killCounts.ContainsKey(animalID)) return;
         if (questComplete[animalID]) return;
 
