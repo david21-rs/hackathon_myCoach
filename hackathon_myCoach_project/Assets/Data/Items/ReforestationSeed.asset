@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 381210a625952fc4e9aa68360f7692b1, type: 3}
+  m_Name: ReforestationSeed
+  m_EditorClassIdentifier: Assembly-CSharp::ItemData
+  itemID: ReforestationSeed
+  itemName: 'Reforestation Seed '
+  icon: {fileID: 8887522133862586935, guid: f4115241b7ab31044a3b978d072f5de6, type: 3}
+  fullArt: {fileID: 8887522133862586935, guid: f4115241b7ab31044a3b978d072f5de6, type: 3}
+  subtitle: 
+  journalDescription: 'Journal Description
+
+    A seed carried from the last clean
+
+    watering
+    hole in the savanna.
+
+
+    Ndugu pressed it into your hand
+
+    without a word.
+    No ceremony.
+
+    Just the weight of something
+
+    that still wants to grow.
+
+
+    Your
+    strikes hit harder.
+
+    The land fights back through you.
+
+
+    EFFECT: +7.5
+    melee damage'
+  meleeDamageBonus: 7.5
+  movementSpeedBonus: 0
+  grantsPoisonDarts: 0

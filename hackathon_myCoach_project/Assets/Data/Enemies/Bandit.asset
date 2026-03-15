@@ -12,13 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2e77b7be84aa924ea9db3289333efe3, type: 3}
   m_Name: Bandit
   m_EditorClassIdentifier: Assembly-CSharp::EnemyData
-  enemyID: 
-  enemyName: 
-  portrait: {fileID: 0}
-  fullArt: {fileID: 0}
-  subtitle: 
-  journalEntry: 
-  weaknesses: 
-  health: 0
-  attackStyle: 
-  biome: 
+  enemyID: Bandit
+  enemyName: The Bandit
+  portrait: {fileID: 21300000, guid: 317b8365a4649ab459f6cb58ec8f9f18, type: 3}
+  fullArt: {fileID: 21300000, guid: 317b8365a4649ab459f6cb58ec8f9f18, type: 3}
+  subtitle: Oportunistic bad guy with sword. (I dunno why hes blue)
+  journalEntry: A local opportunist taking advantage of the climate collapse. They
+    aren't specifically targeting the animals, but they will absolutely steal your
+    gear, your rations, and probably the Suit-Inator's spare batteries if you let
+    them get close. They thrive in the chaos of shifting ecosystems.
+  weaknesses: 'HIT WITH SWORD HARD also SHIELD  WHEN BIG SWORD COMES TO YOU '
+  health: 50
+  attackStyle: SWORD
+  biome: ALL

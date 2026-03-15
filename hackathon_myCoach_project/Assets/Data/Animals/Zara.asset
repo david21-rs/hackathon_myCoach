@@ -12,20 +12,59 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a68b4a894e666d446baa798775f9591b, type: 3}
   m_Name: Zara
   m_EditorClassIdentifier: Assembly-CSharp::AnimalData
-  animalID: 
-  animalName: 
-  species: 
-  scientificName: 
-  status: 0
-  biome: 0
+  animalID: Zara
+  animalName: Zara
+  species: 'Poison Dart Frog '
+  scientificName: Dendrobates tinctorius
+  status: 1
+  biome: 1
   portrait: {fileID: 0}
   journalArt: {fileID: 0}
-  introDialogue: 
+  introDialogue: 'Oh good. Something big enough to actually DO something.
+
+    
+
+    I
+    am Zara. I am also extremely poisonous so please do not touch me. I have said
+    this to every animal in this forest and only about half of them listened.
+
+    
+
+    The
+    loggers are getting closer. Three days ago they were a kilometre away. Today
+    I can hear the saws.
+
+    
+
+    I cannot stop them. But before I ask for your
+    help I need to know you actually understand what is being destroyed here. So.
+    Quiz first. Then we talk.'
   questDialogue: 
-  completionDialogue: 
-  journalEntry: 
-  conservationFact: 
-  doofNote: 
-  questType: 0
+  completionDialogue: 'I have lived my entire life in a ten metre radius.
+
+    This
+    forest is not a resource. It is my entire world.
+
+
+    Thank you for understanding
+    that.
+
+
+    Here. For my new friend.'
+  journalEntry: "Journal Entry\nPoison Dart Frog | Dendrobates tinctorius\nStatus:
+    Endangered \u2014 population declining\n\nPoison dart frogs get their toxicity
+    entirely from\ntheir diet of specific rainforest insects. Remove them from their
+    habitat and they lose their poison within one generation. They are a perfect
+    example of how deeply connected every species is to its ecosystem.\n\nThey are
+    also indicator species \u2014 one of the first\nanimals to disappear when a rainforest
+    is degraded. If dart frogs are gone, the forest is already dying.\n\nThey are
+    heavily targeted by the illegal exotic pet\ntrade. A single frog can sell for
+    hundreds of dollars.\n\nWhat you can do: Never buy exotic amphibians as pets.\n\nSupport
+    Rainforest Trust at rainforesttrust.org"
+  conservationFact: A single golden poison dart frog contains enough toxin to kill
+    ten adult humans. Locals used it on blowgun darts for centuries,hence the name.
+  doofNote: I once tried to synthesise dart frog toxin for a Paralyze-Inator. My
+    lawyer has advised me not to discuss what happened next.
+  questType: 1
   linkedQuiz: {fileID: 0}
   rewardItemID: 

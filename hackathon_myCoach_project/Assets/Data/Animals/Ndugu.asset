@@ -12,20 +12,59 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a68b4a894e666d446baa798775f9591b, type: 3}
   m_Name: Ndugu
   m_EditorClassIdentifier: Assembly-CSharp::AnimalData
-  animalID: 
-  animalName: 
-  species: 
-  scientificName: 
+  animalID: Ndugu
+  animalName: Ndugu
+  species: African Bush Elephant
+  scientificName: 'Loxodonta africana '
   status: 0
   biome: 0
   portrait: {fileID: 0}
   journalArt: {fileID: 0}
-  introDialogue: 
-  questDialogue: 
-  completionDialogue: 
-  journalEntry: 
-  conservationFact: 
-  doofNote: 
+  introDialogue: "YOU ARE ONE OF THEM. Wait, no. You smell... different. My name
+    is Ndugu. I've walked this land for 47 years. When I was young,\nthis river ran
+    year-round. My herd's watering hole\nthe one my grandmother taught me  has a
+    poaching camp on it now. My calves cannot drink safely.\n\nI cannot fight them
+    myself. But you look like you can.\t"
+  questDialogue: 'The camp is just ahead. Drive them out and the water is safe again.
+    That is all I ask. I just want for these lands to be safer for my calves before
+    I die
+
+'
+  completionDialogue: The water is clean again. I will not forget this. Neither will
+    my herd. Elephants remember everything  the good and the bad. You have done something
+    real today.
+  journalEntry: 'African Bush Elephant | Loxodonta africana
+
+    Status: Vulnerable
+    - 415,000 remain in the wild
+
+
+    Elephants are the architects of their ecosystems.
+    They dig waterholes used by dozens of other species, disperse seeds across hundreds
+    of kilometres, and knock down trees that create clearings for smaller animals.
+
+
+    When
+    elephants disappear, the entire landscape changes.
+
+
+    The main threats are
+    habitat loss, human-wildlife
+
+    conflict, and ivory poaching. Despite a 1989
+    international ivory ban, illegal trade continues, driven by demand in Asia and
+    enabled by corruption at borders.
+
+
+    What you can do: Never buy ivory. Support
+    the African
+
+    Wildlife Foundation at awf.org'
+  conservationFact: An elephant can recognize its own reflection, something only
+    a handful of species can do.
+  doofNote: 'Elephants have been observed mourning their dead for days, touching
+    the bones of deceased family members. Science has no better word for this than
+    grief. Also fun fact: Ndugu means friend or relative in Swahili!'
   questType: 0
   linkedQuiz: {fileID: 0}
-  rewardItemID: 
+  rewardItemID: ReforestationSeed
