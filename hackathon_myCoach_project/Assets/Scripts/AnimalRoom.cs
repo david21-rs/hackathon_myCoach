@@ -7,6 +7,7 @@ public class AnimalRoom : MonoBehaviour
     public GameObject exitDoor;
     public GameObject itemPickupPrefab;
     public Transform itemSpawnPoint;
+    public int killsRequired;
 
     private bool hasTriggeredIntro = false;
     private bool questTurnedIn = false;
@@ -17,7 +18,7 @@ public class AnimalRoom : MonoBehaviour
         {
             hasTriggeredIntro = true;
             LockDoor();
-            QuestTracker.Instance.RegisterQuest(animal.animalID, 3);
+            QuestTracker.Instance.RegisterQuest(animal.animalID, killsRequired);
 
             DialogueUI.Instance.ShowDialogue(
                 animal.portrait,

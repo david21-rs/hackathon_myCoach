@@ -117,10 +117,65 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3733764531620260277, guid: feca5e88d7fcd5042a272609ba4c6904, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6351653148190211784}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3408213296894358329, guid: feca5e88d7fcd5042a272609ba4c6904, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7297359115628188266}
+    - targetCorrespondingSourceObject: {fileID: 3408213296894358329, guid: feca5e88d7fcd5042a272609ba4c6904, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -5366944095726479112}
+    - targetCorrespondingSourceObject: {fileID: 3408213296894358329, guid: feca5e88d7fcd5042a272609ba4c6904, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -3837264623375119026}
   m_SourcePrefab: {fileID: 100100000, guid: feca5e88d7fcd5042a272609ba4c6904, type: 3}
 --- !u!4 &7922820853628108878 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3733764531620260277, guid: feca5e88d7fcd5042a272609ba4c6904, type: 3}
   m_PrefabInstance: {fileID: 6783402463570569723}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &8173782043956910786 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3408213296894358329, guid: feca5e88d7fcd5042a272609ba4c6904, type: 3}
+  m_PrefabInstance: {fileID: 6783402463570569723}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7297359115628188266
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8173782043956910786}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6691107ac1c85fb4081d984f26bcf0fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyHitReceiver
+--- !u!114 &-5366944095726479112
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8173782043956910786}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 058a77f0e60c33a41a0e72c51ebb69c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyDeathReporter
+  enemyData: {fileID: 11400000, guid: c78df71fe6f24394093cb5af8ae19f45, type: 2}
+  linkedAnimalID: 
+--- !u!114 &-3837264623375119026
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8173782043956910786}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68e43ebc9a5e6514fb96c04e1bf1a235, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PoisonEffect
+  poisonDamagePerTick: 5
+  tickInterval: 1
+  totalTicks: 4

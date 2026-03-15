@@ -17,6 +17,7 @@ public class EnemyDeathReporter : MonoBehaviour
 
     void OnDestroy()
     {
+        Debug.Log("kill pre reported for: " + linkedAnimalID);
         // Don't fire on scene unload or app quit
         if (isApplicationQuitting) return;
 
@@ -27,7 +28,11 @@ public class EnemyDeathReporter : MonoBehaviour
 
         // 1 — Tell the quest tracker one poacher died
         if (!string.IsNullOrEmpty(linkedAnimalID))
+        {
             QuestTracker.Instance.ReportKill(linkedAnimalID);
+                // not going here ????
+        }
+        
 
         // 2 — Unlock enemy in journal + increment kill count
         if (enemyData != null)
