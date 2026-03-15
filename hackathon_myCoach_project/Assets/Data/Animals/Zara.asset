@@ -14,53 +14,53 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AnimalData
   animalID: Zara
   animalName: Zara
-  species: 'Poison Dart Frog '
-  scientificName: Dendrobates tinctorius
-  status: 1
-  biome: 1
-  portrait: {fileID: 0}
+  species: Polar Bear
+  scientificName: Ursus Maritimus
+  status: 0
+  biome: 3
+  portrait: {fileID: -760466472361236605, guid: 9c53817347f35cd47bc826d725cde022, type: 3}
   journalArt: {fileID: 0}
-  introDialogue: 'Oh good. Something big enough to actually DO something.
+  introDialogue: 'You are not afraid of me... interesting. Most of your kind would
+    start running or gunning at the sight of me. You are different... interesting.
+    There are people blocking the path to my hunting ground.
 
-    
-
-    I
-    am Zara. I am also extremely poisonous so please do not touch me. I have said
-    this to every animal in this forest and only about half of them listened.
-
-    
-
-    The
-    loggers are getting closer. Three days ago they were a kilometre away. Today
-    I can hear the saws.
-
-    
-
-    I cannot stop them. But before I ask for your
-    help I need to know you actually understand what is being destroyed here. So.
-    Quiz first. Then we talk.'
-  questDialogue: 
-  completionDialogue: 'I have lived my entire life in a ten metre radius.
-
-    This
-    forest is not a resource. It is my entire world.
+    They have drills.
+    Equipment. Guns.
 
 
-    Thank you for understanding
-    that.
+    I have not eaten in eleven days.
 
 
-    Here. For my new friend.'
-  journalEntry: "Journal Entry\nPoison Dart Frog | Dendrobates tinctorius\nStatus:
-    Endangered \u2014 population declining\n\nPoison dart frogs get their toxicity
-    entirely from\ntheir diet of specific rainforest insects. Remove them from their
-    habitat and they lose their poison within one generation. They are a perfect
-    example of how deeply connected every species is to its ecosystem.\n\nThey are
-    also indicator species \u2014 one of the first\nanimals to disappear when a rainforest
-    is degraded. If dart frogs are gone, the forest is already dying.\n\nThey are
-    heavily targeted by the illegal exotic pet\ntrade. A single frog can sell for
-    hundreds of dollars.\n\nWhat you can do: Never buy exotic amphibians as pets.\n\nSupport
-    Rainforest Trust at rainforesttrust.org"
+    I am not asking
+    for help. I am simply telling you
+
+    what is ahead. If you are going that way
+    anyway.
+
+'
+  questDialogue: The Ice Golem was once a protector of these areas. He's now too
+    angry to think straight. Put it to rest.
+  completionDialogue: 'When I was three my mother showed me ice that
+
+    stretched
+    past the horizon. By the time I was five
+
+    it was gone every summer.
+
+
+    We
+    adapt. That is what we do.
+
+
+    But you cannot swim forever.'
+  journalEntry: "Polar Bear | Ursus maritimus\r\nStatus: Vulnerable \u2014 26,000
+    remain in the wild\r\n\r\nPolar bears depend entirely on sea ice to hunt seals.
+    As Arctic ice retreats earlier each spring and forms later each autumn, bears
+    are forced to fast for longer and longer periods.\r\n\r\nArctic sea ice has declined
+    13% per decade since 1979. By 2100 it could disappear entirely in summer.\r\n\r\nPolar
+    bears are also poisoned by industrial chemicals like PCBs which accumulate in
+    their fatty tissue and damage their immune and reproductive systems.\r\n\r\nWhat
+    you can do: Support Polar Bears International at polarbearsinternational.org\r\n"
   conservationFact: A single golden poison dart frog contains enough toxin to kill
     ten adult humans. Locals used it on blowgun darts for centuries,hence the name.
   doofNote: I once tried to synthesise dart frog toxin for a Paralyze-Inator. My

@@ -12,32 +12,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a68b4a894e666d446baa798775f9591b, type: 3}
   m_Name: Bjorn
   m_EditorClassIdentifier: Assembly-CSharp::AnimalData
-  animalID: Bjron
+  animalID: Bjorn
   animalName: Bjron
-  species: Polar Bear
-  scientificName: Ursus Maritimus
-  status: 0
-  biome: 3
-  portrait: {fileID: 0}
+  species: 'Poison Dart Frog '
+  scientificName: Dendrobates tinctorius
+  status: 1
+  biome: 1
+  portrait: {fileID: 4723107735738678597, guid: 50522a9e83f69b343b694431706cb9a9, type: 3}
   journalArt: {fileID: 0}
-  introDialogue: 'You are not afraid of me... interesting. Most of your kind would
-    start running or gunning at the sight of me. You are different... interesting.
-    There are people blocking the path to my hunting ground.
+  introDialogue: 'Oh good. Something big enough to actually DO something.
 
-    They have drills.
-    Equipment. Guns.
+    
 
+    
 
-    I have not eaten in eleven days.
+    I
+    am Zara. I am also extremely poisonous so please do not touch me. I have said
+    this to every animal in this forest and only about half of them listened.
 
+    
 
-    I am not asking
-    for help. I am simply telling you
+    
 
-    what is ahead. If you are going that way
-    anyway.
+    The
+    loggers are getting closer. Three days ago they were a kilometre away. Today
+    I can hear the saws.
 
-'
+    
+
+    
+
+    I cannot stop them. But before I ask
+    for your help I need to know you actually understand what is being destroyed
+    here. So. Quiz first. Then we talk.'
   questDialogue: 'The drilling crew. Three of them.
 
     That path is the only way
@@ -45,27 +52,29 @@ MonoBehaviour:
 
 
     I will wait here.'
-  completionDialogue: 'When I was three my mother showed me ice that
+  completionDialogue: 'I have lived my entire life in a ten metre radius.
 
-    stretched
-    past the horizon. By the time I was five
+    This
+    forest is not a resource. It is my entire world.
 
-    it was gone every summer.
+    
 
+    Thank you for understanding
+    that.
 
-    We
-    adapt. That is what we do.
+    
 
-
-    But you cannot swim forever.'
-  journalEntry: "Polar Bear | Ursus maritimus\r\nStatus: Vulnerable \u2014 26,000
-    remain in the wild\r\n\r\nPolar bears depend entirely on sea ice to hunt seals.
-    As Arctic ice retreats earlier each spring and forms later each autumn, bears
-    are forced to fast for longer and longer periods.\r\n\r\nArctic sea ice has declined
-    13% per decade since 1979. By 2100 it could disappear entirely in summer.\r\n\r\nPolar
-    bears are also poisoned by industrial chemicals like PCBs which accumulate in
-    their fatty tissue and damage their immune and reproductive systems.\r\n\r\nWhat
-    you can do: Support Polar Bears International at polarbearsinternational.org\r\n"
+    Here. For my new friend.'
+  journalEntry: "Journal Entry\r\nPoison Dart Frog | Dendrobates tinctorius\r\nStatus:
+    Endangered \u2014 population declining\r\n\r\nPoison dart frogs get their toxicity
+    entirely from\r\ntheir diet of specific rainforest insects. Remove them from
+    their habitat and they lose their poison within one generation. They are a perfect
+    example of how deeply connected every species is to its ecosystem.\r\n\r\nThey
+    are also indicator species \u2014 one of the first\r\nanimals to disappear when
+    a rainforest is degraded. If dart frogs are gone, the forest is already dying.\r\n\r\nThey
+    are heavily targeted by the illegal exotic pet\r\ntrade. A single frog can sell
+    for hundreds of dollars.\r\n\r\nWhat you can do: Never buy exotic amphibians
+    as pets.\r\n\r\nSupport Rainforest Trust at rainforesttrust.org"
   conservationFact: 'Polar bear fur is actually transparent, not white. It scatters
     light the same way snow does. '
   doofNote: 'I once tried making the Arctic colder with a Cryo-Inator. It worked

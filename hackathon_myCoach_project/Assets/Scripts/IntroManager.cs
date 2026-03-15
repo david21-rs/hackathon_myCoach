@@ -75,7 +75,7 @@ public class IntroManager : MonoBehaviour
         currentLine++;
         if (currentLine >= lines.Length)
         {
-            SceneManager.LoadScene("TitleScene"); 
+            SceneManager.LoadScene("FINAL_SCENE"); 
             return;
         }
         ShowCurrentLine();

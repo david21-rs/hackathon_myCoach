@@ -18,7 +18,7 @@ MonoBehaviour:
   scientificName: 'Loxodonta africana '
   status: 0
   biome: 0
-  portrait: {fileID: 0}
+  portrait: {fileID: -28227135244677969, guid: 8131d4cbfb587e14d99c679598f8f0f9, type: 3}
   journalArt: {fileID: 0}
   introDialogue: "YOU ARE ONE OF THEM. Wait, no. You smell... different. My name
     is Ndugu. I've walked this land for 47 years. When I was young,\nthis river ran

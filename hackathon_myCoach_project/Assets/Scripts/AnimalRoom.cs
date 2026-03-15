@@ -36,6 +36,7 @@ public class AnimalRoom : MonoBehaviour
                 animal.completionDialogue,
                 onClose: GiveItem
             );
+            Debug.Log("turning in quest");
         }
     }
 
@@ -53,12 +54,12 @@ public class AnimalRoom : MonoBehaviour
             animal.animalName,
             "Animal added to journal!"
         );
-
+        Debug.Log("opening door");
         UnlockDoor();
     }
 
-    void LockDoor() { if (exitDoor != null) exitDoor.SetActive(false); }
-    void UnlockDoor() { if (exitDoor != null) exitDoor.SetActive(true); }
+    void LockDoor() { if (exitDoor != null) exitDoor.SetActive(true); }
+    void UnlockDoor() { if (exitDoor != null) exitDoor.SetActive(false); }
 
     void GiveItem()
     {

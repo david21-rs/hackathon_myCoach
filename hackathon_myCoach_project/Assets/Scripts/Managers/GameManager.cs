@@ -1,49 +1,58 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using System.IO;
 
 public class GameManager : MonoBehaviour
 {
-    // Singleton — access from anywhere with GameManager.Instance
-    public static GameManager Instance;
+    public static GameManager Instance { get; private set; }
 
-    [HideInInspector] public SaveData saveData;
-    [HideInInspector] public RunState currentRun;
+    public SaveData saveData;
+    private string saveFilePath;
 
     void Awake()
     {
-        // Singleton setup
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
             return;
         }
         Instance = this;
-        DontDestroyOnLoad(gameObject);  // survives scene changes
+        DontDestroyOnLoad(gameObject); 
 
-        // Load persistent save
-        saveData = SaveSystem.Load();
-
-        // Start a fresh run
-        currentRun = new RunState();
+        saveFilePath = Application.persistentDataPath + "/savefile.json";
+        LoadGame();
     }
 
-    public void StartNewRun()
+    public void SaveGame()
     {
-        currentRun = new RunState();
-        Debug.Log("New run started.");
+        string json = JsonUtility.ToJson(saveData, true);
+        File.WriteAllText(saveFilePath, json);
+        Debug.Log("Saved to: " + saveFilePath);
     }
 
-    public void EndRun(bool completed)
+    public void LoadGame()
     {
-        // Write run stats into permanent save
-        saveData.totalRunsCompleted++;
-        saveData.totalPoachersDefeated += currentRun.poachersDefeatedThisRun;
-        saveData.totalAnimalsDocumented += currentRun.animalsDocumentedThisRun;
-
-        if (completed)
+        if (File.Exists(saveFilePath))
         {
-            // award completion achievement etc.
+            string json = File.ReadAllText(saveFilePath);
+            saveData = JsonUtility.FromJson<SaveData>(json);
         }
+        else
+        {
+            saveData = new SaveData(); 
+        }
+    }
 
-        SaveSystem.Save(saveData);
+    public void PlayerDied()
+    {
+        SaveGame(); // Save journal progress before resetting
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+    
+    // Call this from a UI button to clear the save for your presentation demo
+    public void DeleteSave()
+    {
+        if (File.Exists(saveFilePath)) File.Delete(saveFilePath);
+        saveData = new SaveData();
     }
 }

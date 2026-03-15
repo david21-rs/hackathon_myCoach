@@ -23,7 +23,7 @@ public class EnemyDeathReporter : MonoBehaviour
 
         // Don't fire if GameManager doesn't exist yet
         if (GameManager.Instance == null) return;
-
+        
         SaveData save = GameManager.Instance.saveData;
 
         // 1 — Tell the quest tracker one poacher died
