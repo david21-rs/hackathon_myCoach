@@ -3,22 +3,21 @@ using System.Reflection;
 
 public class PlayerStatModifier : MonoBehaviour
 {
-    // Accumulated bonuses
     private float totalDamageMultiplier = 1f;
     private float totalSpeedBonus = 0f;
     public bool hasPoisonDarts = false;
 
-    // Cache the HeroKnight reference
     private HeroKnight heroKnight;
-
-    // Cache the base speed so we always calculate from the original
+    private PlayerCombat playerCombat;
     private float baseSpeed = -1f;
+    private float baseDamage = 15f;  // must match the default in PlayerCombat
 
     void Start()
     {
         heroKnight = GetComponent<HeroKnight>();
+        playerCombat = GetComponent<PlayerCombat>();
 
-        // Read base speed via reflection so we never lose the original value
+        // Read base speed from HeroKnight via reflection
         if (heroKnight != null)
         {
             FieldInfo speedField = typeof(HeroKnight).GetField(
@@ -32,18 +31,14 @@ public class PlayerStatModifier : MonoBehaviour
 
     public void ApplyItem(ItemData item)
     {
-        // Damage multiplier stacks additively
-        // e.g. 1.0 + 0.10 = 1.10 = 10% more damage
         totalDamageMultiplier += item.meleeDamageBonus;
-
-        // Speed bonus stacks additively
         totalSpeedBonus += item.movementSpeedBonus;
 
         if (item.grantsPoisonDarts)
             hasPoisonDarts = true;
 
-        // Apply the new speed to HeroKnight via reflection
         ApplySpeedToHeroKnight();
+        ApplyDamageToPlayerCombat();
 
         Debug.Log("Item applied: " + item.itemName);
         Debug.Log("Damage multiplier: " + totalDamageMultiplier);
@@ -61,11 +56,26 @@ public class PlayerStatModifier : MonoBehaviour
 
         if (speedField != null)
         {
-            // New speed = base speed + (base speed * bonus)
-            // e.g. base 4.0 + (4.0 * 0.15) = 4.6
             float newSpeed = baseSpeed + (baseSpeed * totalSpeedBonus);
             speedField.SetValue(heroKnight, newSpeed);
             Debug.Log("Speed set to: " + newSpeed);
+        }
+    }
+
+    private void ApplyDamageToPlayerCombat()
+    {
+        if (playerCombat == null) return;
+
+        FieldInfo damageField = typeof(PlayerCombat).GetField(
+            "attackDamage",
+            BindingFlags.NonPublic | BindingFlags.Instance
+        );
+
+        if (damageField != null)
+        {
+            float newDamage = baseDamage * totalDamageMultiplier;
+            damageField.SetValue(playerCombat, newDamage);
+            Debug.Log("Attack damage set to: " + newDamage);
         }
     }
 
