@@ -404,7 +404,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 058a77f0e60c33a41a0e72c51ebb69c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyDeathReporter
-  enemyData: {fileID: 11400000, guid: c78df71fe6f24394093cb5af8ae19f45, type: 2}
+  enemyData: {fileID: 11400000, guid: c2f344df6b5f246459b1df51aa80d6a0, type: 2}
   linkedAnimalID: 
 --- !u!114 &6875882632369788488
 MonoBehaviour:

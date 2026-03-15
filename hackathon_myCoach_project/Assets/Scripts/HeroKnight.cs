@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
+using System.Threading.Tasks;
 
 public class HeroKnight : MonoBehaviour {
 
@@ -69,12 +70,31 @@ public class HeroKnight : MonoBehaviour {
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        GameObject entry = GameObject.Find("EntryPoint");
-        if (entry != null) transform.position = entry.transform.position;
+        // 1. Find the correct spawn point
+        GameObject spawn = GameObject.FindGameObjectWithTag("Respawn");
+        if (spawn != null) transform.position = spawn.transform.position;
+
+        // 2. Resurrect the player
+        currentHealth = maxHealth;
+        if (healthBar != null) healthBar.UpdateHealth(currentHealth, maxHealth);
+
+        // 3. Reset the animator so they stop playing the death animation
+        if (m_animator != null)
+        {
+            m_animator.Rebind();
+            m_animator.Update(0f);
+        }
     }
 
     void Start()
     {
+        // Force player to the spawn point instantly on scene load
+        GameObject spawn = GameObject.FindGameObjectWithTag("Respawn");
+        if (spawn != null) 
+        {
+            Debug.Log("spawning at spwn point");
+            transform.position = spawn.transform.position;
+        }
         m_animator = GetComponent<Animator>();
         m_body2d = GetComponent<Rigidbody2D>();
         originalLayer = gameObject.layer;
@@ -235,8 +255,15 @@ public class HeroKnight : MonoBehaviour {
 
         if (healthBar != null) healthBar.UpdateHealth(currentHealth, maxHealth);
 
-        if (currentHealth <= 0) TriggerDeath();
+        if (currentHealth <= 0) Die();
         else TriggerHurt();
+    }
+
+    private async void Die()
+    {
+        TriggerDeath();
+        await Task.Delay(800);
+        GameManager.Instance.PlayerDied();
     }
 
     private void SuccessfulBlock()

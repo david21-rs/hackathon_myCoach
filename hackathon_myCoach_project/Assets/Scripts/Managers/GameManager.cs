@@ -45,8 +45,8 @@ public class GameManager : MonoBehaviour
 
     public void PlayerDied()
     {
-        SaveGame(); // Save journal progress before resetting
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        SaveGame(); 
+        SceneManager.LoadScene("TITLE_SCENE");
     }
     
     // Call this from a UI button to clear the save for your presentation demo

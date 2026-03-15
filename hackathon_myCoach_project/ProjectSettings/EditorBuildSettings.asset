@@ -17,6 +17,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/FINAL_SCENE.unity
     guid: d938acd6b7a27b742a6aab51bb77f39b
+  - enabled: 1
+    path: Assets/Scenes/OutroScene.unity
+    guid: 6a1ab53a63dc57e41b21725b872954ca
   - enabled: 0
     path: Assets/Scenes/lvl1.unity
     guid: 99f9b86d1cf074047ba7ca3165e8076b

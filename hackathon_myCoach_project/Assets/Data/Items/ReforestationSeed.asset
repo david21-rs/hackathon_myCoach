@@ -16,7 +16,7 @@ MonoBehaviour:
   itemName: 'Reforestation Seed '
   icon: {fileID: 8887522133862586935, guid: f4115241b7ab31044a3b978d072f5de6, type: 3}
   fullArt: {fileID: 8887522133862586935, guid: f4115241b7ab31044a3b978d072f5de6, type: 3}
-  subtitle: Ndugu's gift
+  subtitle: Zara's gift
   journalDescription: 'Journal Description
 
     A seed carried from the last clean
@@ -43,6 +43,6 @@ MonoBehaviour:
 
     EFFECT: +7.5
     melee damage'
-  meleeDamageBonus: 7.5
+  meleeDamageBonus: 5
   movementSpeedBonus: 0
   grantsPoisonDarts: 0

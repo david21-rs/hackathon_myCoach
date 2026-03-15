@@ -22,6 +22,7 @@ public class AnimalRoom : MonoBehaviour
 
             DialogueUI.Instance.ShowDialogue(
                 animal.portrait,
+                animal.animalName,
                 animal.introDialogue,
                 onClose: OnIntroComplete
             );
@@ -33,6 +34,7 @@ public class AnimalRoom : MonoBehaviour
             questTurnedIn = true;
             DialogueUI.Instance.ShowDialogue(
                 animal.portrait,
+                animal.animalName,
                 animal.completionDialogue,
                 onClose: GiveItem
             );

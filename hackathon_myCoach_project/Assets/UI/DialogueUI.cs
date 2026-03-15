@@ -21,11 +21,14 @@ public class DialogueUI : MonoBehaviour
         panel.SetActive(false);
     }
 
-    public void ShowDialogue(Sprite portrait, string text, Action onClose = null)
+    // ADDED the "string speaker" parameter here
+    public void ShowDialogue(Sprite portrait, string speaker, string text, Action onClose = null)
     {
         portraitImage.sprite = portrait;
+        speakerName.text = speaker;     // Sets the UI text
         dialogueText.text = text;
         onCloseCallback = onClose;
+        
         panel.SetActive(true);
         Time.timeScale = 0f;           // pause game
     }
@@ -43,7 +46,7 @@ public class DialogueUI : MonoBehaviour
         panel.SetActive(false);
         Time.timeScale = 1f;           // unpause game
 
-        // Fire the callback (e.g. open quiz after intro closes)
+        // Fire the callback
         onCloseCallback?.Invoke();
         onCloseCallback = null;
     }

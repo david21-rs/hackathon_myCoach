@@ -16,7 +16,7 @@ MonoBehaviour:
   itemName: Windmill Boots
   icon: {fileID: -5335637903981835044, guid: c2423ea8241314f43b051a60e71df168, type: 3}
   fullArt: {fileID: -5335637903981835044, guid: c2423ea8241314f43b051a60e71df168, type: 3}
-  subtitle: 'Bjorn''s Gift '
+  subtitle: 'Ndugu''s Gift '
   journalDescription: 'These boots carry the weight of
 
     eleven days without food
@@ -44,5 +44,5 @@ MonoBehaviour:
     EFFECT:
     + 1 movement speed'
   meleeDamageBonus: 0
-  movementSpeedBonus: 1
+  movementSpeedBonus: 4
   grantsPoisonDarts: 0

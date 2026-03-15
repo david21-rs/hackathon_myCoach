@@ -542,6 +542,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AnimalRoom
   animal: {fileID: 11400000, guid: 1b7d39213e274cc4da8b797f523b1f01, type: 2}
   exitDoor: {fileID: 1608900972870176697}
-  itemPickupPrefab: {fileID: 1932585351412749478, guid: aa27e07957548b74893df5381fc46e7c, type: 3}
+  itemPickupPrefab: {fileID: 3826058833284475648, guid: 0695216e47830144195c5b1f2b64c708, type: 3}
   itemSpawnPoint: {fileID: 343295903765001499}
   killsRequired: 1
