@@ -44,5 +44,5 @@ MonoBehaviour:
     EFFECT:
     + 1 movement speed'
   meleeDamageBonus: 0
-  movementSpeedBonus: 4
+  movementSpeedBonus: 2
   grantsPoisonDarts: 0
