@@ -86,12 +86,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_speed: 4
-  m_jumpForce: 7.5
+  m_jumpForce: 9
   m_slideDust: {fileID: 1038168246061390451, guid: 8b8c8cc6774fb074cb9139cc631b108e, type: 3}
   sensorRadius: 0.1
   dashForce: 24
   dashDuration: 0.2
   dashCooldown: 1
+  isBlocking: 0
+  blockDuration: 1
+  blockCooldown: 2
   coyoteTime: 0.15
   maxHealth: 100
   healthBar: {fileID: 0}

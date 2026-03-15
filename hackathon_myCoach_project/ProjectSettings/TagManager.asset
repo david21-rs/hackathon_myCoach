@@ -16,7 +16,7 @@ TagManager:
   - Enemy
   - Hitboxes
   - bullets
-  - 
+  - Background
   - 
   - 
   - 
@@ -39,6 +39,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Backgroud
+    uniqueID: 2227653975
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
